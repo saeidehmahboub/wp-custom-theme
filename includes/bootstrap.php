@@ -96,6 +96,9 @@ final class IWCT_Bootstrap
         // I18n
         (new IWCT_I18n())->init();
 
+        // Theme
+        (new IWCT_Theme())->init();
+
         // Assets
         (new IWCT_Assets())->init();
     }
