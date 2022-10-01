@@ -1,3 +1,6 @@
+header {
+  margin-bottom: 50px;
+}
 header .iwct-header-left {
   background-color: #04c48d;
   padding: 7% 3% 7% 15%;
@@ -31,6 +34,55 @@ header .iwct-header-right {
 header .iwct-header-right img {
   width: 100%;
   height: 100%;
+}
+
+.iwct-filters {
+  margin-bottom: 100px;
+  color: #252b39;
+}
+.iwct-filters #iwct-filters-campus {
+  margin-bottom: 20px;
+}
+.iwct-filters .iwct-filters-title {
+  background-color: #f3efed;
+  height: 70px;
+  align-items: center;
+  display: flex;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  justify-content: space-between;
+}
+.iwct-filters .iwct-filters-title .iwct-filters-button {
+  border: none;
+  background: none;
+}
+.iwct-filters .iwct-filters-items {
+  background-color: #faf8f8;
+  list-style-type: none;
+  padding: 20px;
+}
+.iwct-filters .iwct-filters-items .iwct-filters-item {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 300;
+}
+.iwct-filters .iwct-filters-items .iwct-filters-item label {
+  margin-left: 6px;
+}
+.iwct-filters .iwct-filters-apply-button {
+  background-color: #02c48d;
+  border: 1px solid #02c48d;
+  padding: 8px 15px;
+  margin-top: 30px;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.iwct-filters .iwct-filters-apply-button:hover {
+  background-color: #252b39;
+  border: 1px solid #252b39;
+  color: #ffffff;
 }
 
 /*# sourceMappingURL=styles.css.map */
