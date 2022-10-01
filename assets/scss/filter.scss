@@ -1,0 +1,56 @@
+.iwct-filters {
+  margin-bottom: 100px;
+  color: #252b39;
+
+  #iwct-filters-campus {
+    margin-bottom: 20px;
+  }
+
+  .iwct-filters-title {
+    background-color: #f3efed;
+    height: 70px;
+    align-items: center;
+    display: flex;
+    padding: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    justify-content: space-between;
+
+    .iwct-filters-button {
+      border: none;
+      background: none;
+    }
+  }
+
+  .iwct-filters-items {
+    background-color: #faf8f8;
+    list-style-type: none;
+    padding: 20px;
+
+    .iwct-filters-item {
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: 300;
+
+      label {
+        margin-left: 6px;
+      }
+    }
+  }
+
+  .iwct-filters-apply-button {
+    background-color: #02c48d;
+    border: 1px solid #02c48d;
+    padding: 8px 15px;
+    margin-top: 30px;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 600;
+
+    &:hover {
+      background-color: #252b39;
+      border: 1px solid #252b39;
+      color: #ffffff;
+    }
+  }
+}

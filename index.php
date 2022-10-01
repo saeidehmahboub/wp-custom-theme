@@ -13,7 +13,18 @@
  * @package Itineris wp custom theme
  */
 
-    get_header();
+get_header();
 ?>
+<div class="iwct-main-content">
+    <div class="container">
+        <div class="row">
+            <?php get_template_part('partials/filters'); ?>
+            <div class="col-sm-9 ">
+
+            </div>
+        </div>
+    </div>
+    
+</div>
 <?php
 get_footer();
