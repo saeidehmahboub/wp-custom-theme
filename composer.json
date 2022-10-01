@@ -1,0 +1,9 @@
+{
+  "require-dev": {
+    "itinerisltd/itineris-wp-coding-standards": "^0.4.1"
+  },
+  "scripts": {
+    "style:check": "phpcs",
+    "style:fix": "phpcbf"
+  }
+}
