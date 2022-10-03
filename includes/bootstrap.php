@@ -101,6 +101,10 @@ final class IWCT_Bootstrap
 
         // Assets
         (new IWCT_Assets())->init();
+
+        // Course
+        (new IWCT_Course())->init();
+
     }
 
     /**
