@@ -1,16 +1,14 @@
 <?php
-// no direct access
-defined('ABSPATH') or die();
 
-if(!class_exists('IWCT_Bootstrap')):
+namespace IWCT;
 
 /**
  * Bootstraper Class
  *
  * @class IWCT_Bootstrap
- * @version	1.0.0
+ * @version 1.0.0
  */
-final class IWCT_Bootstrap
+final class IWCTBootstrap
 {
     /**
      * Version.
@@ -22,7 +20,7 @@ final class IWCT_Bootstrap
     /**
      * The single instance of the class.
      *
-     * @var IWCT_Bootstrap
+     * @var IWCTBootstrap
      * @since 1.0.0
      */
     protected static $instance = null;
@@ -32,33 +30,37 @@ final class IWCT_Bootstrap
      *
      * @since 1.0.0
      * @static
-     * @return IWCT_Bootstrap - Main instance.
+     * @return IWCTBootstrap - Main instance.
      */
     public static function instance()
     {
-        // Get an instance of Class
-        if(is_null(self::$instance)) self::$instance = new self();
+        // Get an instance of Class.
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+        }
 
-        // Return the instance
+        // Return the instance.
         return self::$instance;
     }
 
     /**
      * Cloning is forbidden.
+     *
      * @since 1.0.0
      */
     public function __clone()
     {
-        _doing_it_wrong(__FUNCTION__, esc_html__('Cheating huh?', 'iwct'), '1.0.0');
+        _doing_it_wrong(__FUNCTION__, esc_html__('Cheating huh?', 'my-theme'), '1.0.0');
     }
 
     /**
      * Unserializing instances of this class is forbidden.
+     *
      * @since 1.0.0
      */
     public function __wakeup()
     {
-        _doing_it_wrong(__FUNCTION__, esc_html__('Cheating huh?', 'iwct'), '1.0.0');
+        _doing_it_wrong(__FUNCTION__, esc_html__('Cheating huh?', 'my-theme'), '1.0.0');
     }
 
     /**
@@ -66,26 +68,28 @@ final class IWCT_Bootstrap
      */
     protected function __construct()
     {
-        // Define Constants
-        $this->define_constants();
+        // Define Constants.
+        $this->defineConstants();
 
-        // Auto Loader
+        // Auto Loader.
         spl_autoload_register([$this, 'autoload']);
 
-        // Initialize the Theme
+        // Initialize the Theme.
         $this->init();
 
-        // Include Helper Functions
+        // Include Helper Functions.
         $this->helpers();
     }
 
     /**
      * Define Theme Constants.
      */
-    private function define_constants()
+    private function defineConstants()
     {
-        // Theme Version
-        if(!defined('IWCT_VERSION')) define('IWCT_VERSION', $this->version);
+        // Theme Version.
+        if (!defined('IWCT_VERSION')) {
+            define('IWCT_VERSION', $this->version);
+        }
     }
 
     /**
@@ -93,18 +97,17 @@ final class IWCT_Bootstrap
      */
     private function init()
     {
-        // I18n
-        (new IWCT_I18n())->init();
+        // I18n.
+        (new IWCTI18n())->init();
 
-        // Theme
-        (new IWCT_Theme())->init();
+        // Theme.
+        (new IWCTTheme())->init();
 
-        // Assets
-        (new IWCT_Assets())->init();
+        // Assets.
+        (new IWCTAssets())->init();
 
-        // Course
-        (new IWCT_Course())->init();
-
+        // Course.
+        (new IWCTCourse())->init();
     }
 
     /**
@@ -112,31 +115,23 @@ final class IWCT_Bootstrap
      */
     public function helpers()
     {
-        // Util Functions
-        require_once get_template_directory().'/includes/helpers/util.php'; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
+        // Util Functions.
+        require_once get_template_directory() . '/includes/helpers/util.php';
     }
 
     /**
      * Automatically load theme classes whenever needed.
-     * @param string $class_name
+     *
+     * @param string $class_name class name.
      * @return void
      */
     private function autoload($class_name)
     {
-        $class_ex = explode('_', strtolower($class_name));
-
-        // It's not a IWCT Class
-        if($class_ex[0] != 'iwct') return;
-
-        // Drop 'IWCT'
-        $class_path = array_slice($class_ex, 1);
-
-        // Create Class File Path
-        $file_path = get_template_directory() . '/includes/' . implode('/', $class_path) . '.php';
-
-        // We found the class!
-        if(file_exists($file_path)) require_once $file_path; // phpcs:ignore WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
+        $class_name = str_replace('IWCT\IWCT', '', $class_name);
+        $class_name = strtolower($class_name);
+        $file_path = get_template_directory() . '/includes/' . $class_name . '.php';
+        if (file_exists($file_path)) {
+            require_once $file_path;
+        }
     }
 }
-
-endif;

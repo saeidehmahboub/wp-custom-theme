@@ -10,4 +10,4 @@
 require_once get_template_directory() . '/includes/bootstrap.php';
 
 // Init the Theme.
-IWCT_Bootstrap::instance();
+IWCT\IWCTBootstrap::instance();

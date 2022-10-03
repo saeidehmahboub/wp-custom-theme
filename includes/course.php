@@ -1,36 +1,33 @@
 <?php
-// no direct access
-defined('ABSPATH') or die();
 
-if(!class_exists('IWCT_Course')):
+namespace IWCT;
 
 /**
  * Course Class
  *
  * @class IWCT_Course
- * @version	1.0.0
+ * @version 1.0.0
  */
-class IWCT_Course extends IWCT_Base
+class IWCTCourse extends IWCTBase
 {
     /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct();
     }
 
     public function init()
     {
-        add_action('init',  array($this, 'register_post_type'));
-        add_action('init',  array($this, 'register_campus_taxonomy'));
-        add_action('init',  array($this, 'register_coursetype_taxonomy'));
+        add_action('init', [$this, 'registerPostType']);
+        add_action('init', [$this, 'registerCampusTaxonomy']);
+        add_action('init', [$this, 'registerCoursetypeTaxonomy']);
 
-        add_action( 'add_meta_boxes_course', array($this, 'meta_box_for_course') );
-        add_action( 'save_post_course', array($this, 'course_save_meta_boxes_data'), 10, 2 );
+        add_action('add_meta_boxes_course', [$this, 'metaBoxForCourse']);
+        add_action('save_post_course', [$this, 'courseSaveMetaBoxesData'], 10, 2);
     }
 
-    public function register_post_type()
+    public function registerPostType()
     {
         register_post_type('course', [
             'label' => __('Courses', 'my-theme'),
@@ -49,11 +46,11 @@ class IWCT_Course extends IWCT_Base
                 'not_found_in_trash' => __('No courses found in trash', 'my-theme'),
                 'all_items' => __('All courses', 'my-theme'),
                 'insert_into_item' => __('Insert into course', 'my-theme')
-            ],		
+            ],
         ]);
     }
 
-    public function register_campus_taxonomy()
+    public function registerCampusTaxonomy()
     {
         register_taxonomy('course_campus', ['course'], [
             'label' => __('Campus', 'my-theme'),
@@ -80,9 +77,9 @@ class IWCT_Course extends IWCT_Base
         ]);
     }
 
-    public function register_coursetype_taxonomy()
+    public function registerCoursetypeTaxonomy()
     {
-        register_taxonomy( 'coursetype', ['course'], [
+        register_taxonomy('coursetype', ['course'], [
             'label' => __('Course Types', 'my-theme'),
             'rewrite' => ['slug' => 'course-coursetype'],
             
@@ -91,61 +88,76 @@ class IWCT_Course extends IWCT_Base
             'show_in_rest' => false,
 
             'labels' => [
-                'name'=> _x( 'Course Types', 'my-theme' ),
-                'singular_name' => _x( 'Course Type', 'my-theme' ),
-                'menu_name' => __( 'Course Types', 'my-theme' ),
-                'all_items' => __( 'All Course Types', 'my-theme' ),
-                'parent_item' => __( 'Parent Course Type', 'my-theme' ),
-                'parent_item_colon' => __( 'Parent Course Type:', 'my-theme' ),
-                'new_item_name'=> __( 'New Course Type Name', 'my-theme' ),
-                'add_new_item' => __( 'Add New Course Type', 'my-theme' ),
-                'edit_item' => __( 'Edit Course Type', 'my-theme' ),
-                'update_item' => __( 'Update Course Type', 'my-theme' ),
-                'view_item' => __( 'View Course Type', 'my-theme' ),
-                'separate_items_with_commas' => __( 'Separate Course Types with commas', 'my-theme' ),
-                'add_or_remove_items' => __( 'Add or remove Course Types', 'my-theme' ),
-                'choose_from_most_used' => __( 'Choose from the most used', 'my-theme' ),
-                'popular_items' => __( 'Popular Course Types', 'my-theme' ),
-                'search_items' => __( 'Search Course Types', 'my-theme' ),
-                'not_found' => __( 'Not Found', 'my-theme' ),
-                'no_terms' => __( 'No Course Types', 'my-theme' ),
-                'items_list' => __( 'Course Types list', 'my-theme' ),
-                'items_list_navigation' => __( 'Course Types list navigation', 'my-theme' ),
+                'name' => __('Course Types', 'my-theme'),
+                'singular_name' => __('Course Type', 'my-theme'),
+                'menu_name' => __('Course Types', 'my-theme'),
+                'all_items' => __('All Course Types', 'my-theme'),
+                'parent_item' => __('Parent Course Type', 'my-theme'),
+                'parent_item_colon' => __('Parent Course Type:', 'my-theme'),
+                'new_item_name' => __('New Course Type Name', 'my-theme'),
+                'add_new_item' => __('Add New Course Type', 'my-theme'),
+                'edit_item' => __('Edit Course Type', 'my-theme'),
+                'update_item' => __('Update Course Type', 'my-theme'),
+                'view_item' => __('View Course Type', 'my-theme'),
+                'separate_items_with_commas' => __('Separate Course Types with commas', 'my-theme'),
+                'add_or_remove_items' => __('Add or remove Course Types', 'my-theme'),
+                'choose_from_most_used' => __('Choose from the most used', 'my-theme'),
+                'popular_items' => __('Popular Course Types', 'my-theme'),
+                'search_items' => __('Search Course Types', 'my-theme'),
+                'not_found' => __('Not Found', 'my-theme'),
+                'no_terms' => __('No Course Types', 'my-theme'),
+                'items_list' => __('Course Types list', 'my-theme'),
+                'items_list_navigation' => __('Course Types list navigation', 'my-theme'),
             ],
         ]);
     }
 
-    function course_save_meta_boxes_data( $post_id ){
-        // check for nonce to top xss
-        if ( !isset( $_POST['course_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['course_meta_box_nonce'], basename( __FILE__ ) ) ){
+    public function courseSaveMetaBoxesData( $post_id )
+    {
+        $post = wp_unslash($_POST);
+
+        // check for nonce to top xss.
+        if (
+            !isset($post['course_meta_box_nonce'])
+            || !wp_verify_nonce($post['course_meta_box_nonce'], basename(__FILE__))
+        ) {
             return;
         }
     
-        // check for correct user capabilities - stop internal xss from customers
-        if ( ! current_user_can( 'edit_post', $post_id ) ){
+        // check for correct user capabilities - stop internal xss from customers.
+        if (! current_user_can('edit_post', $post_id)) {
             return;
         }
     
-        // update fields
-        if ( isset( $_REQUEST['course_type'] ) ) {
-            update_post_meta( $post_id, 'course_type', sanitize_text_field( $_POST['course_type'] ) );
+        // update fields.
+        if (isset($_REQUEST['course_type'])) {
+            update_post_meta($post_id, 'course_type', sanitize_text_field($post['course_type']));
         }
 
-        if ( isset( $_REQUEST['course_code'] ) ) {
-            update_post_meta( $post_id, 'course_code', sanitize_text_field( $_POST['course_code'] ) );
+        if (isset($_REQUEST['course_code'])) {
+            update_post_meta($post_id, 'course_code', sanitize_text_field($post['course_code']));
         }
 
-        if ( isset( $_REQUEST['course_duration'] ) ) {
-            update_post_meta( $post_id, 'course_duration', sanitize_text_field( $_POST['course_duration'] ) );
+        if (isset($_REQUEST['course_duration'])) {
+            update_post_meta($post_id, 'course_duration', sanitize_text_field($post['course_duration']));
         }
     }
 
-    function meta_box_for_course( $post ){
-        add_meta_box( 'my_meta_box_custom_id', __( 'Additional info', 'my-theme' ), array($this, 'course_meta_box_html_output'), 'course', 'normal', 'low' );
+    public function metaBoxForCourse( $post )
+    {
+        add_meta_box(
+            'my_meta_box_custom_id',
+            __('Additional info', 'my-theme'),
+            [$this, 'courseMetaBoxHtmlOutput'],
+            'course',
+            'normal',
+            'low'
+        );
     }
 
-    function course_meta_box_html_output( $post ) {
-        wp_nonce_field( basename( __FILE__ ), 'course_meta_box_nonce' ); 
+    public function courseMetaBoxHtmlOutput( $post )
+    {
+        wp_nonce_field(basename(__FILE__), 'course_meta_box_nonce');
 
         $course_type = get_post_meta($post->ID, 'course_type', true);
         $course_code = get_post_meta($post->ID, 'course_code', true);
@@ -157,30 +169,30 @@ class IWCT_Course extends IWCT_Base
         ]);
         ?>
             <p>
-                <label><?php echo __('Course Type:', 'my-theme') ?></label>
+                <label><?php echo esc_html_e('Course Type:', 'my-theme'); ?></label>
                 <select name="course_type">
-                    <option><?php echo __('Select', 'my-theme') ?></option>
+                    <option><?php echo esc_html_e('Select', 'my-theme'); ?></option>
                     <?php
-                        foreach ($terms as $term){
-                            $selected = $course_type == $term->name ? "selected" : '';
+                    foreach ($terms as $term) {
+                        $selected = $course_type === $term->name ? 'selected' : '';
                             
-                            echo '<option '.$selected.' value="'.$term->name.'">'.$term->name.'</option>';
-                        }
+                        echo '<option ' . esc_html($selected) . ' value="' . esc_html($term->name) . '">' .
+                            esc_html($term->name) .
+                        '</option>';
+                    }
                     ?>
                 </select>
             </p>
 
             <p>
-                <label><?php echo __('Course Code:', 'my-theme') ?></label>
-                <input type="text" value="<?php echo $course_code; ?>" name="course_code"/>
+                <label><?php echo esc_html_e('Course Code:', 'my-theme'); ?></label>
+                <input type="text" value="<?php echo esc_html($course_code); ?>" name="course_code"/>
             </p>
 
             <p>
-                <label><?php echo __('Course Duration:', 'my-theme') ?></label>
-                <input type="text" value="<?php echo $course_duration; ?>" name="course_duration"/>
+                <label><?php echo esc_html_e('Course Duration:', 'my-theme'); ?></label>
+                <input type="text" value="<?php echo esc_html($course_duration); ?>" name="course_duration"/>
             </p>
         <?php
     }
 }
-
-endif;
