@@ -41,11 +41,13 @@ get_header();
                             
                                 <div class="col-sm-4 iwct-custom-posts">
                                     <div class="iwct-custom-post">
-                                        <?php the_post_thumbnail('medium'); ?>
+                                        <?php echo get_the_post_thumbnail($course_post->ID, 'medium'); ?>
 
                                         <br/>
                                         <div class="iwct-custom-post-content">
-                                            <a href="#" class="iwct-custom-post-title"><?php the_title(); ?></a>
+                                            <a href="#" class="iwct-custom-post-title">
+                                                <?php echo esc_html(get_the_title($course_post->ID)); ?>
+                                            </a>
                                             
                                             <div class="iwct-custom-post-time">
                                                 <div><?php echo esc_html($course_type); ?></div>
