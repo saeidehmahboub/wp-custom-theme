@@ -35,4 +35,4 @@ All logics related to functionalities have been located in `includes` directory.
 
 In order to check code you need to run `composer style:check` in command line.
 
-`Note:` You need to insure befor checking you run the `composer install`.
+`Note:` You need to ensure befor checking you run the `composer install`.
