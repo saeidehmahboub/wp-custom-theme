@@ -1,28 +1,25 @@
 <?php
-// no direct access
-defined('ABSPATH') or die();
 
-if(!class_exists('IWCT_I18n')):
+namespace IWCT;
 
 /**
  * Internationalization Class
  *
  * @class IWCT_I18n
- * @version	1.0.0
+ * @version 1.0.0
  */
-class IWCT_I18n extends IWCT_Base
+class IWCTI18n extends IWCTBase
 {
     /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct();
     }
 
     public function init()
     {
-        add_action('after_setup_theme', array($this, 'setup'));
+        add_action('after_setup_theme', [$this, 'setup']);
     }
 
     public function setup()
@@ -36,5 +33,3 @@ class IWCT_I18n extends IWCT_Base
         load_theme_textdomain('my-theme', get_template_directory() . '/languages');
     }
 }
-
-endif;

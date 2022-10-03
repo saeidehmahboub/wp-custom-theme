@@ -1,16 +1,14 @@
 <?php
-// no direct access
-defined('ABSPATH') or die();
 
-if(!class_exists('IWCT_Base')):
+namespace IWCT;
 
 /**
  * Base Theme Class
  *
  * @class IWCT_Base
- * @version	1.0.0
+ * @version 1.0.0
  */
-class IWCT_Base
+class IWCTBase
 {
     /**
      * Constructor
@@ -19,5 +17,3 @@ class IWCT_Base
     {
     }
 }
-
-endif;

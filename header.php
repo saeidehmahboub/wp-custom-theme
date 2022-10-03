@@ -20,14 +20,19 @@
                 
                     <p class="iwct-header-left-description">
                         <i class="fa-sharp fa-solid fa-quote-left iwct-qutation-fontawesome-top"></i>
-                        I have had an amazing time studying at the College, made lots of new friends and cannot wait to progress to Level 2, so that I can pursue my dream of working with animals.
+                        I have had an amazing time studying at the College, 
+                        made lots of new friends and cannot wait to progress to Level 2, 
+                        so that I can pursue my dream of working with animals.
                         <i class="fa-sharp fa-solid fa-quote-right iwct-qutation-fontawesome-bottom"></i>
                     </p>
 
                     <div class="iwct-header-left-text-bottom">Amy studied Introduction to Animal Care (Level 1)</div>
                 </div>
                 <div class="col-sm-6 iwct-header-right">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/close-up-bougainvillea-purple-flowers-turkey.jpg" alt="img">
+                    <img 
+                        src="<?php echo esc_html(get_template_directory_uri()); ?>/assets/img/flowers-turkey.jpg" 
+                        alt="img"
+                    />
                 </div>
             </div>
         </header>

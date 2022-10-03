@@ -1,12 +1,14 @@
 <?php
+
 /**
  * Theme util functions
+ *
  * @package IWCT
  */
-if(!function_exists('wp_body_open'))
-{
-    function wp_body_open() // phpcs:ignore WPThemeReview.CoreFunctionality.PrefixAllGlobals.NonPrefixedFunctionFound
+
+if (!function_exists('wp_body_open')) {
+    function wp_body_open()
     {
-        do_action('wp_body_open'); // phpcs:ignore WPThemeReview.CoreFunctionality.PrefixAllGlobals.NonPrefixedHooknameFound
+        do_action('wp_body_open');
     }
 }
