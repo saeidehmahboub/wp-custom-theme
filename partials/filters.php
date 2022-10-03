@@ -5,30 +5,18 @@
             <button class="iwct-filters-button"><i class="fa-solid fa-chevron-up"></i></button>
         </div>
         <ul class="iwct-filters-items">
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="enfield" name="enfield" value="enfield">
-                <label for="enfield"> Enfield</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="crystal" name="crystal" value="crystal">
-                <label for="crystal"> Crystal Palace Park</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="gunnersbury" name="gunnersbury" value="gunnersbury">
-                <label for="gunnersbury"> Gunnersbury Park</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="regent" name="regent" value="regent">
-                <label for="regent"> Regent's Park</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="brooks" name="brooks" value="brooks">
-                <label for="brooks"> Brooks Farm</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="mottingham" name="mottingham" value="mottingham">
-                <label for="mottingham"> Mottingham</label>
-            </li>
+            <?php
+                $course_campus_terms = get_terms( 'course_campus', array(
+                    'hide_empty' => false,
+                ) );
+
+                foreach ($course_campus_terms as $term){
+                    echo '<li class="iwct-filters-item">
+                            <input type="checkbox" id="'.$term->name.'" name="'.$term->name.'" value="'.$term->name.'">
+                            <label for="'.$term->name.'">'.$term->name.' </label>
+                        </li>';
+                }
+            ?>
         </ul>
     </div>
 
@@ -38,30 +26,18 @@
             <button class="iwct-filters-button" ><i class="fa-solid fa-chevron-up"></i></button>
         </div>
         <ul class="iwct-filters-items">
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="enfield" name="enfield" value="enfield">
-                <label for="enfield"> Enfield</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="crystal" name="crystal" value="crystal">
-                <label for="crystal"> Crystal Palace Park</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="gunnersbury" name="gunnersbury" value="gunnersbury">
-                <label for="gunnersbury"> Gunnersbury Park</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="regent" name="regent" value="regent">
-                <label for="regent"> Regent's Park</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="brooks" name="brooks" value="brooks">
-                <label for="brooks"> Brooks Farm</label>
-            </li>
-            <li class="iwct-filters-item">
-                <input type="checkbox" id="mottingham" name="mottingham" value="mottingham">
-                <label for="mottingham"> Mottingham</label>
-            </li>
+            <?php
+                $course_type_terms = get_terms( 'coursetype', array(
+                    'hide_empty' => false,
+                ) );
+
+                foreach ($course_type_terms as $term){
+                    echo '<li class="iwct-filters-item">
+                            <input type="checkbox" id="'.$term->name.'" name="'.$term->name.'" value="'.$term->name.'">
+                            <label for="'.$term->name.'">'.$term->name.' </label>
+                        </li>';
+                }
+            ?>
         </ul>
     </div>
 
