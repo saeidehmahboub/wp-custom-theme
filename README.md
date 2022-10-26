@@ -1,4 +1,4 @@
-# Itineris WP Custom Theme
+# WP Custom Theme
 
 ## Introduction
 
