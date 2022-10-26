@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is my technical challenge a custom WordPress theme for Itineris company. It has a page that included a list of courses.
+This is my technical challenge a custom WordPress theme. It has a page that included a list of courses.
 
 ## Installation and Configuration
 
